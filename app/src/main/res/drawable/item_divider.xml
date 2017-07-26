@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size
+        android:width="5dp"
+        android:height="8dp"
+        />
+    <solid android:color="@android:color/transparent" />
+</shape>
