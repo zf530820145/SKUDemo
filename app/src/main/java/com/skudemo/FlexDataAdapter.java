@@ -223,24 +223,25 @@ class FlexDataAdapter extends RecyclerView.Adapter {
                     TextView tafText = (TextView) flowLayout.getFlexItemAt(v);
                     if (parent != flowLayout) {//选中时，当前行的其他Item不做更新
                         Long id = checkedProduct.get(flowLayout);
-                        if (tafText.isEnabled()) {//只对可以选中的按钮的状态进行更新
-                            Long tag = (Long) tafText.getTag();
-                            long selectResult = tag * checktag;//选中的按钮和可以选择的按钮的积，是否在集合里面
-                            for (Long cancheck : resultData) {
+                        if(id==null||id==0)
+                            id=1L;
+                        Long tag = (Long) tafText.getTag();
+                        long selectResult = tag *(checkedResult/id);//选中的按钮和可以选择的按钮的积，是否在集合里面
+                        for (Long cancheck : resultData) {
+                            if (cancheck % selectResult == 0) {
+                                tafText.setEnabled(true);
+                                tafText.setClickable(true);
                                 tafText.setSelected(false);
-                                if (cancheck % selectResult == 0) {
-                                    tafText.setEnabled(true);
-                                    tafText.setClickable(true);
-                                    if (id != null && id.equals(tag)) {
-                                        tafText.setSelected(true);
-                                        defaultCheckTv.put(flowLayout, tafText);
-                                    }
-                                    break;
-                                } else {
-                                    tafText.setEnabled(false);
-                                    tafText.setClickable(false);
+                                if (id.equals(tag)) {
+                                    tafText.setSelected(true);
+                                    defaultCheckTv.put(flowLayout, tafText);
                                 }
-                            }
+                                break;
+                            } else {
+                                tafText.setSelected(false);
+                                tafText.setEnabled(false);
+                                tafText.setClickable(false);
+                                }
                         }
                     }
                 }
